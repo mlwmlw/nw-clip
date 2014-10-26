@@ -3,7 +3,9 @@
   "main": "index.html",
   "window": {
     "toolbar": false,
-    "frame": true
+    "frame": true,
+		"icon": "paste.png",
+		"width": 400
   },
   "dependencies": {
     "nodewebkit": "^0.10.5"

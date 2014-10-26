@@ -10,13 +10,41 @@
 	var menu = new gui.Menu();
 	//menu.append(new gui.MenuItem({ type: 'checkbox', label: 'show' }));
 	//tray.menu = menu;
+	ctl = (function(win) {
+		var visible = true;
+		
+		return { 
+			show: function() {
+				win.show();
+				win.setShowInTaskbar(true);
+				visible = true;
+			}, 
+			hide: function() {
+				win.hide();
+				win.setShowInTaskbar(false);
+				visible = false;
+			},
+			toggle: function() {
+				visible ? this.hide(): this.show();
+			}
+		}
+	})(win);
 	win.on('close', function() {
-		this.hide();
+		ctl.hide();
 	});
 	tray.on('click', function() {
-		win.show();	
+		ctl.show();
 	});
-	win.hide();
+	ctl.hide()
+	var option = {
+		key : "Ctrl+B",
+		active : function() {
+			ctl.toggle()	
+		},
+	};
+	var shortcut = new gui.Shortcut(option);
+	gui.App.registerGlobalHotKey(shortcut);
+	
 	angular.module('xapp', []).controller('clip', function($scope, $interval) {
 		var clipboard = gui.Clipboard.get();
 		var old;
@@ -27,7 +55,7 @@
 		$interval(function() {
 			clip = clipboard.get('text');
 			if(clip != old && clip != '')
-				$scope.clips.push({
+				$scope.clips.unshift({
 					text: clip,
 					ts: + new Date()
 				});
