@@ -1,0 +1,11 @@
+{
+  "name": "nw-demo",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "frame": true
+  },
+  "dependencies": {
+    "nodewebkit": "^0.10.5"
+  }
+}

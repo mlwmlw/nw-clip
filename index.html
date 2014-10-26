@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="xapp">
+<head>
+	<title>Hello World!</title>
+	<script src="angular.min.js"></script>
+	<script>
+	var gui = require('nw.gui');
+	var win = gui.Window.get();
+	var tray = new gui.Tray({icon: 'paste.png' });
+	var menu = new gui.Menu();
+	//menu.append(new gui.MenuItem({ type: 'checkbox', label: 'show' }));
+	//tray.menu = menu;
+	win.on('close', function() {
+		this.hide();
+	});
+	tray.on('click', function() {
+		win.show();	
+	});
+	win.hide();
+	angular.module('xapp', []).controller('clip', function($scope, $interval) {
+		var clipboard = gui.Clipboard.get();
+		var old;
+		$scope.clips = [];
+		$scope.copy = function(text) {
+			clipboard.set(text, 'text');
+		};
+		$interval(function() {
+			clip = clipboard.get('text');
+			if(clip != old && clip != '')
+				$scope.clips.push({
+					text: clip,
+					ts: + new Date()
+				});
+			old = clip;
+		}, 500);
+	});
+		
+	</script>
+</head>
+<body ng-controller="clip">
+<h1>clipboard</h1>
+<ul>
+	<li ng-repeat="clip in clips track by $index"><a href="#" ng-click="copy(clip.text)">{{clip.ts | date:'yyyy-MM-dd HH:mm:ss'}} - {{clip.text}}</a></li>
+</ul>
+</body>
+</html>
+
