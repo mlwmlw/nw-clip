@@ -3,6 +3,10 @@
 <head>
 	<title>Hello World!</title>
 	<script src="angular.min.js"></script>
+	<script src="angular-highlightjs.min.js"></script>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css" />
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css" />
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
 	<script>
 	var gui = require('nw.gui');
 	var win = gui.Window.get();
@@ -45,7 +49,7 @@
 	var shortcut = new gui.Shortcut(option);
 	gui.App.registerGlobalHotKey(shortcut);
 	
-	angular.module('xapp', []).controller('clip', function($scope, $interval) {
+	angular.module('xapp', ['hljs']).controller('clip', function($scope, $interval) {
 		var clipboard = gui.Clipboard.get();
 		var old;
 		$scope.clips = [];
@@ -54,11 +58,12 @@
 		};
 		$interval(function() {
 			clip = clipboard.get('text');
-			if(clip != old && clip != '')
+			if(clip != old && clip != '') {
 				$scope.clips.unshift({
 					text: clip,
 					ts: + new Date()
 				});
+			}
 			old = clip;
 		}, 500);
 	});
@@ -68,7 +73,10 @@
 <body ng-controller="clip">
 <h1>clipboard</h1>
 <ul>
-	<li ng-repeat="clip in clips track by $index"><a href="#" ng-click="copy(clip.text)">{{clip.ts | date:'yyyy-MM-dd HH:mm:ss'}} - {{clip.text}}</a></li>
+	<li ng-repeat="clip in clips track by $index" ng-click="copy(clip.text)">
+		{{clip.ts | date:'yyyy-MM-dd HH:mm:ss'}}<br />
+		<div hljs source="clip.text"></div>
+	</li>
 </ul>
 </body>
 </html>

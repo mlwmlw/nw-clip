@@ -4,8 +4,7 @@
   "window": {
     "toolbar": false,
     "frame": true,
-		"icon": "paste.png",
-		"width": 400
+    "icon": "paste.png"
   },
   "dependencies": {
     "nodewebkit": "^0.10.5"
