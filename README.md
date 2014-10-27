@@ -4,7 +4,7 @@ nw-clip
 nodewebkit clipboard for programmer
 
 ![screenshot](https://raw.github.com/mlwmlw/nw-clip/master/screenshot.png "screenshot")
-![screenshot-win32](https://raw.github.com/mlwmlw/nw-clip/master/screenshot-win32.png "screenshot-win32")
+![screenshot-win](https://raw.github.com/mlwmlw/nw-clip/master/screenshot-win.png "screenshot-win")
 
 # Install
     npm i
