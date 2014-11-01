@@ -93,7 +93,6 @@
 <ul>
 	<li ng-repeat="clip in clips track by $index" >
 		{{clip.ts | date:'yyyy-MM-dd HH:mm:ss'}}<div style="color:blue;float:right;" ng-click="clip.edit=!clip.edit"><span ng-show="!clip.edit">edit</span><span ng-show="clip.edit" >view</span></div><br />
-		{{clip.option}}
 		<div ng-if="!clip.edit" style="cursor:copy" hljs source="clip.text" ng-click="copy(clip.text)"></div>
 		<div ng-if="clip.edit" ui-codemirror="clip.option" ng-model="clip.text"></div>
 	</li>
