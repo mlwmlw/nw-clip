@@ -68,5 +68,5 @@ angular.module('xapp', ['hljs', 'ui.codemirror']).controller('clip', function($s
 			});
 		}
 		old = clip;
-	}, 1000);
+	}, 500);
 });
