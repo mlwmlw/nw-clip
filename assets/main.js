@@ -1,9 +1,8 @@
 var gui = require('nw.gui');
 var win = gui.Window.get();
 var tray = new gui.Tray({icon: 'paste.png' });
-var menu = new gui.Menu();
-//menu.append(new gui.MenuItem({ type: 'checkbox', label: 'show' }));
-//tray.menu = menu;
+
+
 ctl = (function(win) {
 	var visible = true;
 	return { 
@@ -22,6 +21,22 @@ ctl = (function(win) {
 		}
 	}
 })(win);
+
+var menu = new gui.Menu({type: 'menubar'});
+menu.append(new gui.MenuItem({ label: 'Open' }));
+menu.append(new gui.MenuItem({ label: 'Clear' }));
+menu.append(new gui.MenuItem({ label: 'Exit' }));
+menu.items[0].click = function() {
+	ctl.show();
+};
+menu.items[1].click = function() {
+	clips = [];		
+};
+menu.items[2].click = function() {
+	win.close(true);	
+};
+tray.menu = menu;
+
 win.on('close', function() {
 	ctl.hide();
 });
@@ -38,15 +53,17 @@ var option = {
 var shortcut = new gui.Shortcut(option);
 gui.App.registerGlobalHotKey(shortcut);
 CodeMirror.modeURL = "assets/codemirror/mode/%N/%N.js";
+var clips = [];
 angular.module('xapp', ['hljs', 'ui.codemirror']).controller('clip', function($scope, $interval) {
 	var clipboard = gui.Clipboard.get();
 	var old;
-	$scope.clips = [];
+	$scope.clips = clips;
 	$scope.copy = function(text) {
 		clipboard.set(text, 'text');
 	};
 	var map = {java: 'clike'};
 	$interval(function() {
+		$scope.clips = clips;
 		clip = clipboard.get('text');
 		if(clip != old && clip != '') {
 			$scope.clips.unshift({
