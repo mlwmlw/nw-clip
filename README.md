@@ -11,6 +11,9 @@ nodewebkit clipboard for programmer
     $ npm install nodewebkit -g
     $ nodewebkit
 
+# build
+		gulp nw
+	
 # shortcut 
 command + N or Ctrl + N
 

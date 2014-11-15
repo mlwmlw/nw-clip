@@ -1,12 +1,15 @@
 {
   "name": "nw-demo",
   "main": "index.html",
+	"version": "0.0.1",
   "window": {
     "toolbar": false,
     "frame": true,
     "icon": "paste.png"
   },
   "dependencies": {
+    "gulp": "^3.8.10",
+    "node-webkit-builder": "^0.3.0",
     "nodewebkit": "^0.10.5"
   }
 }
